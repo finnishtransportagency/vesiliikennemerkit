@@ -3,7 +3,7 @@ collections=waterway_signs, style_script
 version=1.0
 
 [waterway_signs]
-name=Väylävirasto navigation signs
+name=Väylävirasto waterway signs
 author=Väylävirasto/Finnish transport infrastructure agency
 email=paikkatieto@vayla.fi
 tags=väylävirasto, waterway signs, png
