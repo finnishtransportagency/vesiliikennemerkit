@@ -29,10 +29,7 @@ from qgis.core import (QgsProcessing,
 class SignStylizerPNG(QgsProcessingAlgorithm):
 
     INPUT = 'INPUT'
-    OUTPUT = 'OUTPUT'
     SIGN_CODE_FIELD = 'sign_code_field'
-    SPEED_LIMIT_FIELD = 'speed_limit_field'
-    OLD_OR_NEW = "old_or_new"
     MODIFY_SIZE = 'modify_size'
 
     def tr(self, string):
@@ -59,18 +56,10 @@ class SignStylizerPNG(QgsProcessingAlgorithm):
                        " Optionally adjusts image size based on map scale.")
 
     def initAlgorithm(self, config=None):
-        # self.addParameter(
-        #     QgsProcessingParameterEnum(
-        #         self.OLD_OR_NEW,
-        #         self.tr('Visualisoitko vanhoilla vai uusilla liikennemerkeillä?'),
-        #         ["Vanhoilla", "Uusilla"]
-        #     )
-        # )
-
         self.addParameter(
             QgsProcessingParameterVectorLayer(
                 self.INPUT,
-                self.tr('Valitse liikennemerkkitaso'),
+                self.tr('Valitse vesiliikennemerkkitaso'),
                 [QgsProcessing.TypeVectorPoint]
             )
         )
@@ -78,20 +67,9 @@ class SignStylizerPNG(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterField(
                 self.SIGN_CODE_FIELD,
-                'Valitse sarake, jossa merkkikoodit ovat. Esimerkiksi: \n-Digiroad (vanhat merkit): VANHAKOODI \n-Digiroad: TYYPPI\n'+
-                '-Tierekisteri (Vanhat): S_ASETUSNR\n-Tierekisteri: S_UUSIASNR',
+                'Valitse sarake, jossa merkkikoodit ovat. Esimerkiksi: \n-Haavin vesiliikennemerkit: vlmlajityyppi TAI vesiliikennemerkin laji',
                 '',
                 self.INPUT))
-
-        speed_parameter = QgsProcessingParameterField(
-            self.SPEED_LIMIT_FIELD,
-            'Valitse sarake, jossa liikenteen nopeusrajoitusarvot ovat. \n-Digiroad: ARVO \n'+
-            '-Tierekisteri: LMTEKSTI',
-            '',
-            self.INPUT)
-        speed_parameter.setFlags(QgsProcessingParameterField.FlagOptional)
-
-        self.addParameter(speed_parameter)
 
         self.addParameter(
             QgsProcessingParameterBoolean(
@@ -102,18 +80,12 @@ class SignStylizerPNG(QgsProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         input_layer = self.parameterAsVectorLayer(parameters, self.INPUT, context)
         value_field = self.parameterAsString(parameters, self.SIGN_CODE_FIELD, context)
-        speed_field = self.parameterAsString(parameters, self.SPEED_LIMIT_FIELD, context)
-        old_or_new_selection = self.parameterAsString(parameters, self.OLD_OR_NEW, context)
         size_selection = self.parameterAsBool(parameters, self.MODIFY_SIZE, context)
 
-        if old_or_new_selection == "1":
-            old_or_new_selection = "new"
-        else:
-            old_or_new_selection = "old"
 
         # Assume PNG files are stored similarly to SVGs but under a 'png' folder. NOTE: 'png' folder is the root folder of the installed collection and doesn't need to be included in the path.
         resource_path = (QgsApplication.qgisSettingsDirPath() + "resource_sharing/collections/Väylävirasto " + 
-                         "navigation signs (Vesiliikennemerkit 0.1)/png/")
+                         "waterway signs (Finnish Waterway Signs)/png/")
         resource_path = resource_path.replace("\\", "/")
 
         # The rest of the script would proceed similarly, but we'll use a simple PNG marker symbol layer

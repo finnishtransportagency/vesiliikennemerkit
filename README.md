@@ -17,7 +17,7 @@ Pistemuotoiset datat voi visualisoida PNG-kuvilla avaamalla tason symbologian ja
 
 Jos tason pisteissä on attribuuttitietona, mitä merkkiä ne esittävät, ne voi visualisoida automaattisesti oikealla merkillä Python-skriptillä. Avaa skripti työkaluvalikosta (*Processing*>*Toolbox*), jossa sen on *Scripts* alavalikon alla (*Finnish Waterway Sign Stylizer (PNG)*). Valitse skriptin parametrit:
 1. Pistemuotoinen taso (esimerkiksi Digiroadin liikennemerkkipisteet).
-2. Sarake, jossa kolminumeroiset merkkikoodit ovat. Esimerkiksi Haavin aineistoissa tämä on *vlmlajityyppi* tai *vesiliikennemerkin laji*. Koodit ovat numeroita 0–37.
+2. Sarake, jossa merkkikoodit ovat. Esimerkiksi Haavin aineistoissa tämä on *vlmlajityyppi* tai *vesiliikennemerkin laji*. Koodit ovat numeroita 0–37.
 3. Skripti voi myös asettaa kuvat skaalautumaan karttanäkymän mittakaavan mukaan. 
 
 Jos kaikki menee kuten pitää, pisteet korvautuvat välittömästi oikealla merkeillä karttaikkunassa. Jos kuvapisteissä näkyy vain mustia kysymysmerkkejä, varmista valitseesi oikean tason ja sarakkeet.
